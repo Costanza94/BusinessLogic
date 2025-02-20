@@ -30,11 +30,8 @@ public class TaskService {
     public Optional<TaskEntity> updateTask(Long id, TaskEntity taskEntity){
         Optional<TaskEntity> optionalTaskEntity = taskRepository.findById(id);
         if(optionalTaskEntity.isPresent()){
-            TaskEntity taskEntity2 = optionalTaskEntity.get();
-            taskEntity2.setDate(taskEntity.getDate());
-            taskEntity2.setDescription(taskEntity.getDescription());
-            taskEntity2.setTitle(taskEntity.getTitle());
-            taskEntity2.setCompleted(boolean t);
+            if(optionalTaskEntity.get().isCompleted())
+                optionalTaskEntity.get().setCompleted(true);
             TaskEntity updatedTask = taskRepository.save(taskEntity);
             return Optional.of(updatedTask);
         }
