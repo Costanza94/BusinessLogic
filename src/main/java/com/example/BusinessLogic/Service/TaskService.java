@@ -39,8 +39,12 @@ public class TaskService {
     }
 
     //deleteTask
-    public String deletedTask(Long id){
+    public void deletedTask(Long id){
         taskRepository.deleteById(id);
-        return "Task con id=  " + id + "è stato cancellato";
+    }
+
+    //find by id
+    public Optional<TaskEntity> findById (Long id) {
+        return taskRepository.findById(id);
     }
 }

@@ -1,5 +1,6 @@
 package com.example.BusinessLogic.Entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import org.hibernate.annotations.Target;
 
@@ -16,16 +17,17 @@ public class TaskEntity {
     @Column(name = "description")
     private String description;
     @Column(name = "dueDate")
-    private LocalDate date;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+    private LocalDate dueDate;
     @Column(name = "completed")
     private boolean completed;
 
     //empty costructor
     private TaskEntity(){}
 
-    public TaskEntity(boolean completed, LocalDate date, String description, String title, Long id) {
+    public TaskEntity(boolean completed, LocalDate dueDate, String description, String title, Long id) {
         this.completed = completed;
-        this.date = date;
+        this.dueDate = dueDate;
         this.description = description;
         this.title = title;
         this.id = id;
@@ -47,12 +49,12 @@ public class TaskEntity {
         this.completed = completed;
     }
 
-    public LocalDate getDate() {
-        return date;
+    public LocalDate getDueDate() {
+        return dueDate;
     }
 
-    public void setDate(LocalDate date) {
-        this.date = date;
+    public void setDueDate(LocalDate dueDate) {
+        this.dueDate = dueDate;
     }
 
     public String getDescription() {
