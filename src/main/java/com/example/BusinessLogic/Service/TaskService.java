@@ -3,8 +3,11 @@ package com.example.BusinessLogic.Service;
 import com.example.BusinessLogic.Entity.TaskEntity;
 import com.example.BusinessLogic.Repository.TaskRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.config.Task;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -22,8 +25,7 @@ public class TaskService {
 
     //add task
     public TaskEntity addTask(TaskEntity taskEntity){
-        TaskEntity taskEntity1 = taskRepository.save(taskEntity);
-        return taskEntity1;
+        return taskRepository.save(taskEntity);
     }
 
     //update task
@@ -47,4 +49,18 @@ public class TaskService {
     public Optional<TaskEntity> findById (Long id) {
         return taskRepository.findById(id);
     }
+
+
+    public long calculateTimeRemaining(TaskEntity task) {
+        LocalDate dueDate = task.getDueDate();
+        LocalDate currentDate = LocalDate.now();
+        if (dueDate.isBefore(currentDate)) {
+            return 0; // Il compito è scaduto
+        } else {
+            return ChronoUnit.DAYS.between(currentDate, dueDate);
+        }
+    }
+
+
+
 }
